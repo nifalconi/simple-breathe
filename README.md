@@ -7,6 +7,10 @@ it in and out. No sign-up, no tracking, no backend.
 
 **Live:** [nifalconi.github.io/simple-breathe](https://nifalconi.github.io/simple-breathe/)
 
+**Installs as a PWA in one tap** — open the live URL on your phone, hit
+**Install** (or **Add to Home Screen** on iOS), and Breathe lives on your
+home screen like any native app. Offline, full-screen, no App Store.
+
 ## What it does
 
 One screen. A soft orb that scales on inhale, holds, and shrinks on
@@ -26,15 +30,18 @@ to `localStorage`.
 | Box     | 4 · 4 · 4 · 4    | Even square. Focus reset.        |
 | Soft    | 5 · 5            | Two-phase, no hold. Easiest.     |
 
-## Install as a PWA
+## Install as a PWA — super easy
 
-Open the live URL on a phone:
+No app store, no account, no download dialog. Open the live URL and
+install it in one tap:
 
-- **iOS Safari** — Share → **Add to Home Screen**.
-- **Android Chrome / Desktop Chrome / Edge** — tap **Install** in the
-  Settings screen, or use the browser's install menu.
+- **iOS Safari** — Share → **Add to Home Screen**. Done.
+- **Android Chrome / Desktop Chrome / Edge** — tap **Install** inside
+  the Settings screen (or use the browser's own Install menu). Done.
 
-Once installed, it runs offline and in its own window.
+Once installed, Breathe launches full-screen from your home screen,
+works offline (service worker precaches the bundle on first visit),
+and takes up about 160 KB.
 
 ## Local development
 
