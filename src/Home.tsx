@@ -69,7 +69,7 @@ function Orb({ phase, phaseDuration, accent, running }: OrbProps) {
 
   const idleAnim = running ? "none" : "orbIdle 6s ease-in-out infinite";
   const transition = running
-    ? `transform ${phaseDuration}s cubic-bezier(0.4, 0, 0.4, 1)`
+    ? `transform ${phaseDuration}s cubic-bezier(0.45, 0, 0.55, 1)`
     : "transform 1.2s ease";
 
   return (
