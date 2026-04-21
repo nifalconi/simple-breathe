@@ -50,9 +50,10 @@ interface OrbProps {
   phaseDuration: number;
   accent: string;
   running: boolean;
+  onToggle: () => void;
 }
 
-function Orb({ phase, phaseDuration, accent, running }: OrbProps) {
+function Orb({ phase, phaseDuration, accent, running, onToggle }: OrbProps) {
   const targetScale =
     phase === "Inhale" ? 1.4 :
     phase === "Exhale" ? 0.55 :
@@ -73,10 +74,18 @@ function Orb({ phase, phaseDuration, accent, running }: OrbProps) {
     : "transform 1.2s ease";
 
   return (
-    <div style={{
-      position: "relative", width: 260, height: 260,
-      display: "flex", alignItems: "center", justifyContent: "center",
-    }}>
+    <div
+      onClick={onToggle}
+      role="button"
+      aria-label={running ? "End session" : "Begin session"}
+      style={{
+        position: "relative", width: 260, height: 260,
+        display: "flex", alignItems: "center", justifyContent: "center",
+        cursor: "pointer",
+        userSelect: "none",
+        WebkitUserSelect: "none",
+        WebkitTapHighlightColor: "transparent",
+      }}>
       <div style={{
         position: "absolute", inset: 0, borderRadius: "50%",
         background: `radial-gradient(circle at 50% 45%, ${accent}33 0%, ${accent}00 70%)`,
@@ -139,6 +148,12 @@ export default function HomeScreen({
   const stop = (): void => {
     setRunning(false);
     if (timerRef.current) clearTimeout(timerRef.current);
+    setPhaseIdx(0);
+    setElapsed(0);
+  };
+
+  const toggle = (): void => {
+    if (running) stop(); else start();
   };
 
   const [currentPhase, currentDuration]: [PhaseLabel, number] = running
@@ -204,6 +219,7 @@ export default function HomeScreen({
           phaseDuration={currentDuration || 4}
           accent={accent}
           running={running}
+          onToggle={toggle}
         />
       </div>
 
