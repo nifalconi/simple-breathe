@@ -117,6 +117,9 @@ export default function App({ appConfig }: AppProps) {
             accent={accentHex}
             wordmark={wordmark}
             theme={theme}
+            pattern={state.pattern}
+            setPattern={p => update("pattern", p)}
+            haptics={state.haptics}
             onOpenSettings={() => setScreen("settings")}
             onBegin={() => {}}
           />
