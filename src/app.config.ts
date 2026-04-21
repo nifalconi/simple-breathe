@@ -16,17 +16,17 @@ export interface AppConfig {
 }
 
 export const appConfig: AppConfig = {
-  name: "simple",
-  shortName: "simple",
-  description: "A serverless client-side PWA built from simple-app-template.",
+  name: "breathe",
+  shortName: "breathe",
+  description: "A calm, single-purpose breathing PWA. Pick a pattern, tap to begin, follow the orb.",
   themeColor: "#F6F1E8",
   backgroundColor: "#F6F1E8",
   accentColor: "#B8C4A9",
 
-  purpose: "Describe what this app does in one sentence.",
-  audience: "Describe who it is for in one sentence.",
+  purpose: "Guide a short breathing session with a gently scaling orb.",
+  audience: "Anyone who wants one minute of calm.",
 
   display: "standalone",
-  orientation: "any",
+  orientation: "portrait",
   lang: "en",
 };
