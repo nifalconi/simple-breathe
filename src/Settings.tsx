@@ -2,7 +2,7 @@
 
 import { useRef, useState, type ReactNode } from "react";
 import { usePwaInstall } from "./usePwaInstall.ts";
-import type { AccentKey, Accent, Prefs, Theme, ThemeMode } from "./constants.ts";
+import { PATTERNS, type AccentKey, type Accent, type PatternKey, type Prefs, type Theme, type ThemeMode } from "./constants.ts";
 import { hapticsSupported, pulse } from "./lib/haptics.ts";
 import {
   notificationsSupported,
@@ -39,6 +39,38 @@ interface SegmentedProps<T extends string> {
   value: T;
   onChange: (v: T) => void;
   theme: Theme;
+}
+
+interface ToggleProps {
+  on: boolean;
+  onChange: (v: boolean) => void;
+  theme: Theme;
+}
+
+function Toggle({ on, onChange, theme }: ToggleProps) {
+  const isDark = theme === "dark";
+  return (
+    <button
+      onClick={() => onChange(!on)}
+      style={{
+        width: 44, height: 26, borderRadius: 999, border: "none",
+        background: on
+          ? (isDark ? "#B8C4A9" : "#3A3A36")
+          : (isDark ? "rgba(255,255,255,0.14)" : "rgba(58,58,54,0.14)"),
+        position: "relative", cursor: "pointer", padding: 0,
+        transition: "background 200ms ease",
+      }}
+    >
+      <span style={{
+        position: "absolute", top: 3, left: on ? 21 : 3,
+        width: 20, height: 20, borderRadius: "50%",
+        background: isDark ? "#F6F1E8" : "#fff",
+        transition: "left 200ms cubic-bezier(0.3, 0, 0.3, 1)",
+        boxShadow: "0 1px 2px rgba(0,0,0,0.15)",
+        display: "block",
+      }} />
+    </button>
+  );
 }
 
 function Segmented<T extends string>({ options, value, onChange, theme }: SegmentedProps<T>) {
@@ -193,6 +225,28 @@ export default function SettingsScreen({ state, update, accents, theme, onClose 
         </SettingItem>
       </div>
 
+      <div style={{ fontSize: 11, letterSpacing: 2, textTransform: "uppercase", color: muted, marginBottom: 8, paddingLeft: 4 }}>Session</div>
+      <div style={{ background: cardBg, border, borderRadius: 16, marginBottom: 20, overflow: "hidden" }}>
+        <SettingItem label="Default pattern" theme={theme}>
+          <Segmented<PatternKey>
+            options={(Object.entries(PATTERNS) as Array<[PatternKey, typeof PATTERNS[PatternKey]]>).map(([k, p]) => [k, p.label])}
+            value={state.pattern}
+            onChange={v => update("pattern", v)}
+            theme={theme}
+          />
+        </SettingItem>
+        <SettingItem label="Haptics" last theme={theme}>
+          <Toggle on={state.haptics} onChange={v => update("haptics", v)} theme={theme} />
+        </SettingItem>
+      </div>
+
+      <div style={{ fontSize: 11, letterSpacing: 2, textTransform: "uppercase", color: muted, marginBottom: 8, paddingLeft: 4 }}>Reminders</div>
+      <div style={{ background: cardBg, border, borderRadius: 16, marginBottom: 20, overflow: "hidden" }}>
+        <SettingItem label="Daily reminder" last theme={theme}>
+          <Toggle on={state.reminder} onChange={v => update("reminder", v)} theme={theme} />
+        </SettingItem>
+      </div>
+
       <div style={{ fontSize: 11, letterSpacing: 2, textTransform: "uppercase", color: muted, marginBottom: 8, paddingLeft: 4 }}>Install</div>
       <div style={{ background: cardBg, border, borderRadius: 16, marginBottom: 12, overflow: "hidden" }}>
         <div style={{ padding: "16px 20px" }}>
@@ -302,7 +356,7 @@ export default function SettingsScreen({ state, update, accents, theme, onClose 
         }}
         title="Tap three times to toggle dev panel"
       >
-        v1.0{devVisible ? " · dev" : ""}
+        v1.0 · take it slow{devVisible ? " · dev" : ""}
       </button>
     </div>
   );
